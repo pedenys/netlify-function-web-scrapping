@@ -1,6 +1,11 @@
 import axios from 'axios'
 import $ from 'cheerio'
 const url = 'https://www.unephraseducheckout.fr'
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET',
+  'Content-Type': 'application/json; charset=utf-8',
+}
 
 const getAuthorAndJobObject = (authorAndJobRaw) => {
   const authorAndJob = authorAndJobRaw.replace('\n', '')
@@ -52,9 +57,7 @@ exports.handler = async () => {
 
   return {
     statusCode: isSuccess ? 200 : 500,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-    },
+    headers,
     body: isSuccess
       ? JSON.stringify(allQuotes)
       : 'Internal error service : ¯\\_(ツ)_/¯ ',
