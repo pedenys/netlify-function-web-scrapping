@@ -30,16 +30,22 @@ const getFormattedQuote = (quote) => {
 
 exports.handler = async () => {
   let isSuccess
-  try {
-    // whatever the error, data or JS, we throw
-    const html = await axios(url).data
+  let allQuotes
 
-    let allQuotes = $("div[class*='quote-']", html)
+  // whatever the error, data or JS, we throw
+  try {
+    // get parsed document from website
+    const html = await (await axios(url)).data
+
+    // get each quote and extract infos (author, quote content, author's job)
+    allQuotes = $("div[class*='quote-']", html)
     allQuotes =
       allQuotes && allQuotes.map((i, quote) => getFormattedQuote(quote))
 
+    // set allQuotes var to array of quotes
     allQuotes = Object.values(allQuotes).slice(0, allQuotes.length)
-    isSuccess = allQuotes ? true : false
+
+    isSuccess = allQuotes && allQuotes.length > 0 ? true : false
   } catch (error) {
     isSuccess = false
   }
