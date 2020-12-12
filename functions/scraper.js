@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import axios from 'axios'
 import $ from 'cheerio'
 const url = 'https://www.unephraseducheckout.fr'
 
@@ -29,15 +29,19 @@ const getFormattedQuote = (quote) => {
 }
 
 exports.handler = async () => {
-  const html = await (await fetch(url)).text()
   let isSuccess
+  try {
+    // whatever the error, data or JS, we throw
+    const html = await axios(url).data
 
-  let allQuotes = $("div[class*='quote-']", html)
-  allQuotes = allQuotes && allQuotes.map((i, quote) => getFormattedQuote(quote))
+    let allQuotes = $("div[class*='quote-']", html)
+    allQuotes =
+      allQuotes && allQuotes.map((i, quote) => getFormattedQuote(quote))
 
-  if (allQuotes.length > 0) {
     allQuotes = Object.values(allQuotes).slice(0, allQuotes.length)
     isSuccess = allQuotes ? true : false
+  } catch (error) {
+    isSuccess = false
   }
 
   return {
