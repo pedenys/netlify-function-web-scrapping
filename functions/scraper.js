@@ -1,4 +1,4 @@
-import rp from 'request-promise'
+import fetch from 'node-fetch'
 import $ from 'cheerio'
 const url = 'https://www.unephraseducheckout.fr'
 
@@ -29,7 +29,7 @@ const getFormattedQuote = (quote) => {
 }
 
 exports.handler = async () => {
-  const html = await rp(url)
+  const html = await (await fetch(url)).text()
   let isSuccess
 
   let allQuotes = $("div[class*='quote-']", html)
@@ -47,6 +47,6 @@ exports.handler = async () => {
     },
     body: isSuccess
       ? JSON.stringify(allQuotes)
-      : 'Internal error service : ¯_(ツ)_/¯ ',
+      : 'Internal error service : ¯\\_(ツ)_/¯ ',
   }
 }
