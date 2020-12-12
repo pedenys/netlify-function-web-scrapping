@@ -1,22 +1,22 @@
 {
   "name": "scrap",
   "version": "1.0.0",
-  "description": "",
+  "description": "Netlify function with npm dependency for web scrapping",
   "main": "index.js",
   "scripts": {
     "dev": "netlify-lambda serve functions",
     "build": "netlify-lambda build functions"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "netlify function",
+    "web scrapping"
+  ],
+  "author": "pedenys",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
     "cheerio": "^1.0.0-rc.3",
-    "jsdom": "^16.4.0",
-    "puppeteer": "^5.5.0",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.6"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "netlify-lambda": "^2.0.1"
